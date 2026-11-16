@@ -1,0 +1,17 @@
+name: "XMRig Miner"
+description: "Monero CPU Miner (XMRig) for Home Assistant"
+version: "1.0.0"
+slug: "xmrig_miner"
+init: false
+arch:
+  - aarch64
+options:
+  pool: "pool.supportxmr.com:3333"
+  wallet: "DEINE_XMR_ADRESSE"
+  worker: "haos-pi5"
+  threads: 4
+schema:
+  pool: str
+  wallet: str
+  worker: str
+  threads: int
