@@ -5,4 +5,5 @@ exec xmrig \
   -u "$(bashio::config 'wallet')" \
   -p "$(bashio::config 'worker')" \
   --threads="$(bashio::config 'threads')" \
+  --randomx-mode=light \
   --no-color
