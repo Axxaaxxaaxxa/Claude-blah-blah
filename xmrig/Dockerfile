@@ -1,4 +1,6 @@
-# Stage 1: Kompilieren (wird danach verworfen)
+ARG BUILD_FROM
+
+# Stage 1: Kompilieren
 FROM alpine:3.19 AS builder
 
 RUN apk add --no-cache cmake make g++ git libuv-dev openssl-dev
@@ -9,8 +11,7 @@ RUN git clone --depth 1 https://github.com/xmrig/xmrig.git /xmrig \
     && cmake .. -DCMAKE_BUILD_TYPE=Release -DWITH_HWLOC=OFF \
     && make -j4
 
-# Stage 2: Finales Image (nur Binary)
-ARG BUILD_FROM
+# Stage 2: Finales Image
 FROM $BUILD_FROM
 
 RUN apk add --no-cache libuv libstdc++ libgcc
