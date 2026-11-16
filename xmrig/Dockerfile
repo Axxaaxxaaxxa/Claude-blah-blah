@@ -3,13 +3,13 @@ ARG BUILD_FROM
 # Stage 1: Kompilieren
 FROM alpine:3.19 AS builder
 
-RUN apk add --no-cache cmake make g++ git libuv-dev openssl-dev
+RUN apk add --no-cache cmake make g++ git libuv-dev openssl-dev linux-headers musl-dev
 
 RUN git clone --depth 1 https://github.com/xmrig/xmrig.git /xmrig \
     && mkdir /xmrig/build \
     && cd /xmrig/build \
     && cmake .. -DCMAKE_BUILD_TYPE=Release -DWITH_HWLOC=OFF \
-    && make -j4
+    && make -j2
 
 # Stage 2: Finales Image
 FROM $BUILD_FROM
