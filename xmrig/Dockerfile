@@ -1,16 +1,12 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-RUN apk add --no-cache cmake make g++ git \
-    libuv-dev openssl-dev hwloc-dev
+RUN apk add --no-cache wget tar
 
-RUN git clone --depth 1 https://github.com/xmrig/xmrig.git /tmp/xmrig \
-    && mkdir /tmp/xmrig/build \
-    && cd /tmp/xmrig/build \
-    && cmake .. -DCMAKE_BUILD_TYPE=Release \
-    && make -j4 \
-    && cp xmrig /usr/local/bin/ \
-    && rm -rf /tmp/xmrig
+RUN wget -q https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-linux-static-aarch64.tar.gz \
+    && tar -xzf xmrig-6.22.2-linux-static-aarch64.tar.gz \
+    && cp xmrig-6.22.2/xmrig /usr/local/bin/ \
+    && rm -rf xmrig-6.22.2*
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
