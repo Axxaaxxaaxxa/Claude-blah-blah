@@ -1,9 +1,34 @@
 #!/usr/bin/with-contenv bashio
 
-exec xmrig \
-  -o "$(bashio::config 'pool')" \
-  -u "$(bashio::config 'wallet')" \
-  -p "$(bashio::config 'worker')" \
-  --threads="$(bashio::config 'threads')" \
-  --randomx-mode=light \
-  --no-color
+POOL=$(bashio::config 'pool')
+WALLET=$(bashio::config 'wallet')
+WORKER=$(bashio::config 'worker')
+THREADS=$(bashio::config 'threads')
+
+cat > /tmp/config.json << JSONEOF
+{
+    "autosave": false,
+    "background": false,
+    "colors": false,
+    "randomx": {
+        "mode": "light",
+        "1gb-pages": false,
+        "numa": false
+    },
+    "cpu": {
+        "enabled": true,
+        "max-threads-hint": 50
+    },
+    "pools": [
+        {
+            "url": "${POOL}",
+            "user": "${WALLET}",
+            "pass": "${WORKER}",
+            "keepalive": true,
+            "tls": false
+        }
+    ]
+}
+JSONEOF
+
+exec xmrig --config=/tmp/config.json
