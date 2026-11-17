@@ -3,7 +3,6 @@
 POOL=$(bashio::config 'pool')
 WALLET=$(bashio::config 'wallet')
 WORKER=$(bashio::config 'worker')
-THREADS=$(bashio::config 'threads')
 
 cat > /tmp/config.json << JSONEOF
 {
@@ -17,7 +16,7 @@ cat > /tmp/config.json << JSONEOF
     },
     "cpu": {
         "enabled": true,
-        "max-threads-hint": 50
+        "max-threads-hint": 100
     },
     "pools": [
         {
